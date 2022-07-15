@@ -36,6 +36,6 @@ Where:
 
 **endFrame** is the number of the last image
 
-See `example.html` for a working example.
+See `imgSpinner/WebContent/example.html` for a working example.
 
 	
