@@ -3,7 +3,7 @@
  
 ### Intro
 
-Way back in the '90's, I created quite a bit of QTVR content including object movies. Recently going through some old harddrives, I found this work. I went looking for a way to display it, and for panoramas there is a good open source solution. However for object movies, all I could find were proprietarty products, or code that used large libraries like jquery. I just wanted a siple pure javascript player, so I wrote this one.
+Way back in the '90's, I created quite a bit of QTVR content including object movies. Recently going through some old harddrives, I found this work. I went looking for a way to display it, and for panoramas there is a good open source solution. However for object movies, all I could find were proprietarty products, or code that used large libraries like jquery. I just wanted a simple pure javascript player, so I wrote this one.
 
 Currently it is feature poor, just enough to play my old qtvr object content, but I intend to continue to develop it as time allows. I also welcome contribution from others.
 
