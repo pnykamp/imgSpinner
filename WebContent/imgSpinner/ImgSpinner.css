@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+
+/* css applied to images loaded in spinner */
+.spinner-img{
+	width: 100%;
+	height: auto;
+}
+
+/* progress bar css */
+.progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.progress-background{
+  width: 220px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: gray;
+  opacity: 0.4;
+  border-radius: 10px;
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>imgSpinner</title>
+
+	<script type="text/javascript" src="imgSpinner/ImgSpinner.js"></script>
+	<link rel="stylesheet" type="text/css" href="imgSpinner/ImgSpinner.css">
+	
+
+	
+	<script type="text/javascript">
+	
+	
+		function start(){
+			
+			// small table - 1 drawer
+			CreateSpinner().init("spinner", "images/sm-jpgs/#.jpg", "Antique Table", 1, 47);
+
+			
+		}
+		
+
+		
+	</script>
+	
+	
+	
+	<style type="text/css">
+	
+	
+		/* desktop */
+		@media screen and (min-width: 901px) {
+		
+ 			.container {
+				position: absolute;
+				width: 700px;
+				left: 0;
+				right: 0;
+				margin-left: auto;
+				margin-right: auto;
+				
+				user-select: none;
+		
+				// background-color: gray; 
+			}
+			
+			
+			.object {
+				position:absolute;
+				width: 440px;
+				top: 100px;
+				left: 0;
+				right: 0;
+				margin-left: auto;
+				margin-right: auto;
+				
+				
+				// background-color: gray;
+			}
+
+			
+		}
+		
+		
+		/* tablet */
+		@media screen and (max-width: 900px) and (min-width: 601px){
+		
+ 			.container {
+				position: absolute;
+				width: 600px;
+				left: 0;
+				right: 0;
+				margin-left: auto;
+				margin-right: auto;
+				
+				user-select: none;
+		
+				// background-color: gray; 
+			}
+			
+			
+			.object {
+				position:absolute;
+				width: 400px;
+				top: 100px;
+				left: 0;
+				right: 0;
+				margin-left: auto;
+				margin-right: auto;
+				
+				
+				// background-color: gray;
+			}
+		
+		}
+		
+		/* mobile */
+		@media screen and (max-width: 600px) {
+		
+ 			.container {
+				position: absolute;
+				width: 340px;
+				left: 0;
+				right: 0;
+				margin-left: auto;
+				margin-right: auto;
+				
+				user-select: none;
+		
+				// background-color: gray; 
+			}
+			
+
+			.object {
+				position:absolute;
+				width: 340px;
+				top: 100px;
+				left: 0;
+				right: 0;
+				margin-left: auto;
+				margin-right: auto;
+				
+				
+				// background-color: gray;
+			}
+			
+		
+		}
+	
+	</style>
+	
+	
+</head>
+
+
+
+
+<body onload="start()">
+
+	<div id="container" class="container">
+		
+ 		<div class="object">
+			<div id="spinner"></div>
+		</div>
+		
+	</div>
+
+</body>
+
+
+
+</html>
+
+
