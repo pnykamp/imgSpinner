@@ -7,11 +7,11 @@ Way back in the '90's, I created quite a bit of QTVR content including object mo
 
 Currently it is feature poor, just enough to play my old qtvr object content, but I intend to continue to develop it as time allows. I also welcome contribution from others.
 
-I have included a working example in the codebase (example.html).
+I have included a working example with images in the codebase (example.html).
 
 ### Usage
 
-Firt import the imgSpinner js and css files.
+First import the imgSpinner js and css files.
 
  	<script type="text/javascript" src="imgSpinner/ImgSpinner.js"></script>
 	<link rel="stylesheet" type="text/css" href="imgSpinner/ImgSpinner.css">
@@ -36,6 +36,6 @@ Where:
 
 **endFrame** is the number of the last image
 
-See `example.html` for a working example with images I shot way back then.
+See `example.html` for a working example.
 
 	
