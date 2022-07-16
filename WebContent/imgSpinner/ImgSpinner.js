@@ -22,14 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-function CreateSpinner() {
+function CreateImgSpinner() {
 	
 	// private variables
 	let spinnerDiv, firstFrame, lastFrame, dragX, isRotating, currentFrame, pixelsPerFrame, numLoaded;
 	let progress, progressBackground;
+	let dirAndSp = 1;
 	
 	// initialization function - the only public function
-	function init(divId, pattern, firstImgNum, lastImgNum, altText) {
+	function init(divId, pattern, firstImgNum, lastImgNum, altText, directionAndSpeed) {
 		
 		console.log("CreateSpinner init called");
 
@@ -42,6 +43,7 @@ function CreateSpinner() {
 	    isRotating = false;
 	    numLoaded = 0;
 	    currentFrame = firstFrame;
+	    dirAndSp = directionAndSpeed;
 	    
 	    // do this first in case spinnerDiv.offsetWidth is affected
 	    createImages(pattern, altText);
@@ -119,7 +121,7 @@ function CreateSpinner() {
     // respond to drag - called from event handlers
     function drag(x, delta) {
         
-        if ((delta >= pixelsPerFrame)) {
+        if ((delta*dirAndSp >= pixelsPerFrame)) {
         	
         	// console.log("left");
 
@@ -135,7 +137,7 @@ function CreateSpinner() {
             let img4 = document.getElementById("img" + (currentFrame));
             img4.style.display = "block";
 
-        } else if (-delta >= pixelsPerFrame) {
+        } else if (-delta*dirAndSp >= pixelsPerFrame) {
         	
         	// console.log("right");
         	
