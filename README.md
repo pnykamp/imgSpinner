@@ -22,20 +22,16 @@ Then initialize the spinner after the page has loaded.
 	
 The arguments for the init function are:
 
-	init(divId, pattern, altText, startFrame, endFrame)
+	init(divId, pattern, firstImgNum, lastImgNum, altText)
 	
 Where:
 
 **divId** is the id of the div imgSpinner loads the images into
 
-**pattern** is the numbering pattern for your images. # is replaced by the image number.
+**pattern** is the numbering pattern for your images. # is replaced by the image number. Image numbers need to be conseutive but can start at any number.
+
+**startImgNum** is the number of the first image
+
+**lastImgNum** is the number of the last image
 
 **altText** is the alt text of the images
-
-**startFrame** is the number of the first image
-
-**endFrame** is the number of the last image
-
-See `imgSpinner/WebContent/example.html` for a working example.
-
-	

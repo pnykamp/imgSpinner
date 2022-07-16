@@ -29,15 +29,15 @@ function CreateSpinner() {
 	let progress, progressBackground;
 	
 	// initialization function - the only public function
-	function init(divId, pattern, altText, startFrame, endFrame) {
+	function init(divId, pattern, firstImgNum, lastImgNum, altText) {
 		
 		console.log("CreateSpinner init called");
 
 	    let that = this;
 
 	    spinnerDiv = document.getElementById(divId);
-	    firstFrame = startFrame;
-	    lastFrame = endFrame;
+	    firstFrame = firstImgNum;
+	    lastFrame = lastImgNum;
 	    dragX = 0;
 	    isRotating = false;
 	    numLoaded = 0;
