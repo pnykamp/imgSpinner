@@ -3,8 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Paul Nykamp">
+	<meta name="description" content="Demo of imgSpinner, an open source javascript player for qtvr like object movies.">
+	<meta name="keywords" content="JavaScript, QTVR, object movie, 360">
 	
-	<title>imgSpinner</title>
+	<title>imgSpinner example</title>
 
 	<script type="text/javascript" src="imgSpinner/ImgSpinner.js"></script>
 	<link rel="stylesheet" type="text/css" href="imgSpinner/ImgSpinner.css">
@@ -13,20 +16,19 @@
 	
 	<script type="text/javascript">
 	
+		// called from body onload
 		function start(){
-			
-			// small table - 1 drawer
 			CreateSpinner().init("spinner", "images/sm-jpgs/#.jpg", "Antique Table", 1, 47);
-
-			
 		}
 		
 	</script>
 	
-	
+	<!-- The CSS below is included to show how to make imgSpinner responsive.
+	In imgSpinner.css the width of the image is set to 100% and the height to auto.
+	So, imgSpinner will take the width of whatever element it is in, and the height 
+	will be proportional. -->
 	
 	<style type="text/css">
-	
 	
 		/* desktop */
 		@media screen and (min-width: 901px) {
@@ -38,29 +40,19 @@
 				right: 0;
 				margin-left: auto;
 				margin-right: auto;
-				
 				user-select: none;
-		
-				// background-color: gray; 
 			}
 			
-			
 			.object {
-				position:absolute;
+				position: relative;
 				width: 440px;
-				top: 100px;
 				left: 0;
 				right: 0;
 				margin-left: auto;
 				margin-right: auto;
-				
-				
-				// background-color: gray;
 			}
 
-			
 		}
-		
 		
 		/* tablet */
 		@media screen and (max-width: 900px) and (min-width: 601px){
@@ -72,24 +64,16 @@
 				right: 0;
 				margin-left: auto;
 				margin-right: auto;
-				
 				user-select: none;
-		
-				// background-color: gray; 
 			}
 			
-			
 			.object {
-				position:absolute;
+				position: relative;
 				width: 400px;
-				top: 100px;
 				left: 0;
 				right: 0;
 				margin-left: auto;
 				margin-right: auto;
-				
-				
-				// background-color: gray;
 			}
 		
 		}
@@ -98,19 +82,15 @@
 		@media screen and (max-width: 600px) {
 		
  			.container {
-				position: absolute;
+				position: relative;
 				width: 340px;
 				left: 0;
 				right: 0;
 				margin-left: auto;
 				margin-right: auto;
-				
 				user-select: none;
-		
-				// background-color: gray; 
 			}
 			
-
 			.object {
 				position:absolute;
 				width: 340px;
@@ -119,12 +99,16 @@
 				right: 0;
 				margin-left: auto;
 				margin-right: auto;
-				
-				
-				// background-color: gray;
 			}
 			
+		}
 		
+		.copy {
+			text-align: center;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: auto;
 		}
 	
 	</style>
@@ -138,6 +122,13 @@
 <body onload="start()">
 
 	<div id="container" class="container">
+	
+		<div class="copy">
+			<h3>imgSpinner</h3>
+			<p>Click and drag to spin the object.</p>
+		</div>
+		
+		<br>
 		
  		<div class="object">
 			<div id="spinner"></div>
