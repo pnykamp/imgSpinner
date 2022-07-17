@@ -3,7 +3,7 @@
  
 ### Intro
 
-Way back in the '90's, I created quite a bit of QTVR content including object movies. Recently going through some old harddrives, I found this work. I went looking for a way to display it, and for panoramas there is a good open source solution. However for object movies, all I could find were proprietarty products, or code that used large libraries like jquery. I just wanted a simple pure javascript player, so I wrote this one.
+Way back in the '90's, I created quite a bit of QTVR content including object movies. Recently going through some old harddrives, I found this work. I went looking for a way to display it, and for panoramas there is a good open source solution. However for object movies, all I could find were proprietarty products, or code that used libraries. I just wanted a simple pure javascript player, so I wrote this one.
 
 I intend to continue to develop it as time allows. I also welcome contributions, feedback and feature requests from others.
 
@@ -11,16 +11,16 @@ I have included a working example with images in the codebase (example.html). Th
 
 ### Usage
 
-First import the imgSpinner js and css files.
+First import the imgSpinner js and css files (use your own path).
 
  	<script type="text/javascript" src="imgSpinner/ImgSpinner.js"></script>
 	<link rel="stylesheet" type="text/css" href="imgSpinner/ImgSpinner.css">
  
-Then initialize the spinner after the page has loaded.
+Then initialize the spinner after the page has loaded, for eg:
 
 	CreateImgSpinner().init("spinner", "images/sm-jpgs/#.jpg", "Antique Table", 1, 47, 1);
 	
-The arguments for the init function are:
+The signature for the init function is:
 
 	init(divId, pattern, firstImgNum, lastImgNum, altText, directionAndSpeed)
 	
