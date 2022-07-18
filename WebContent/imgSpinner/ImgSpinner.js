@@ -34,8 +34,8 @@ function CreateImgSpinner() {
 	let progress, progressBackground;
 	let dirAndSp = 1;
 	
-	let lastX = 0;		//not drag speed - lastDragSpped - mouseUpDragSpeed
-	let thisX = 0;		//not drag speed - lastDragSpped - mouseUpDragSpeed
+	let lastX = 0;		
+	let thisX = 0;		
 	
 	// initialization function - the only public function
 	function init(divId, pattern, firstImgNum, lastImgNum, altText, directionAndSpeed) {
@@ -141,30 +141,15 @@ function CreateImgSpinner() {
 
         	dragX = x;
         	
-            let img3 = document.getElementById("img" + currentFrame);
-        	img3.style.display = 'none';
-            if(currentFrame == lastFrame){
-            	currentFrame = firstFrame;
-            } else {
-            	currentFrame++;
-            }
-            let img4 = document.getElementById("img" + (currentFrame));
-            img4.style.display = "block";
+        	moveImage(1);
 
         } else if (-delta*dirAndSp >= pixelsPerFrame) {
         	
         	// console.log("right");
         	
-            dragX = x;
-            let img = document.getElementById("img" + currentFrame);
-            img.style.display = 'none';
-            if(currentFrame == firstFrame){
-            	currentFrame = lastFrame;
-            } else {
-            	currentFrame--;
-            }
-            let img2 = document.getElementById("img" + currentFrame);
-            img2.style.display = "block";
+        	dragX = x;
+        	
+        	moveImage(-1);
 
         }  
   
@@ -211,9 +196,9 @@ function CreateImgSpinner() {
     	
     	let imgInertia = (thisX-lastX);
     	let nextDuration;
-    	let initialInertiaLimit = 0.1;		
-    	let inertiaLimit = 2;				// imgInertia rotation cutoff
-    	let inertiaReductionRatio = 2;
+    	let initialInertiaLimit = 1;		
+    	let inertiaLimit = 4;				// imgInertia rotation cutoff
+    	let inertiaReductionRatio = 1.4;
     	
     	
     	
@@ -249,7 +234,7 @@ function CreateImgSpinner() {
     	}
     	
     	function setDuration(){
-    		nextDuration = Math.abs(1000/imgInertia);
+    		nextDuration = Math.abs(500/imgInertia);
     	}
     	setDuration();
     	
