@@ -25,20 +25,17 @@ SOFTWARE.
 function CreateImgSpinner() {
 	
 	// private variables
+	let spinnerDiv, firstFrame, lastFrame;
+	let numLoaded, progress, progressBackground;
+	let pixelsPerFrame, dirAndSp;
+	let lastRotateImgX, isRotating, currentFrame;
 	
-	// dragX = mouse x on last image increment
-	// lastX - last reported mouse x 
+	let lastX = 0;			// last onMouseMove
+	let thisX = 0;			// this onMouseMove
 	
+	let lastXTime = 0;		// set onMouseMove
+	let thisXTime = 0;		// set onMouseUp
 	
-	let spinnerDiv, firstFrame, lastFrame, dragX, isRotating, currentFrame, pixelsPerFrame, numLoaded;
-	let progress, progressBackground;
-	let dirAndSp = 1;
-	
-	let lastX = 0;		
-	let thisX = 0;	
-	
-	let lastXTime = 0;
-	let thisXTime = 0;
 	
 	// initialization function - the only public function
 	function init(divId, pattern, firstImgNum, lastImgNum, altText, directionAndSpeed) {
@@ -50,7 +47,7 @@ function CreateImgSpinner() {
 	    spinnerDiv = document.getElementById(divId);
 	    firstFrame = firstImgNum;
 	    lastFrame = lastImgNum;
-	    dragX = 0;
+	    lastRotateImgX = 0;
 	    isRotating = false;
 	    numLoaded = 0;
 	    currentFrame = firstFrame;
@@ -132,39 +129,35 @@ function CreateImgSpinner() {
     // respond to drag - called from event handlers
     function drag(x) {
     	
-    	lastX = x;
     	
-    	let delta = dragX - x;
-    	
-    	// console.log(delta);
+    	console.log("drag(x)");
+    	console.log("lastX: " + lastX);
+    	console.log("x: " + x);
+    
+        lastX = thisX;
+        thisX = x;
         
+        
+        
+        
+        
+        lastXTime = thisXTime;
+        thisXTime = new Date().getTime();
+    	
+
+    	let delta = lastRotateImgX - x;
+
         if ((delta*dirAndSp >= pixelsPerFrame)) {
-        	
-        	// console.log("left");
-
-        	dragX = x;
-        	
+        	lastRotateImgX = x;
         	moveImage(1);
-
         } else if (-delta*dirAndSp >= pixelsPerFrame) {
-        	
-        	// console.log("right");
-        	
-        	dragX = x;
-        	
+        	lastRotateImgX = x;
         	moveImage(-1);
-
         }  
-  
     }
     
     // increment is 1 or -1
     function moveImage(increment){
-    	
-    	console.log("moveImage, increment: " + increment);
-    	
-    	// console.log(currentFrame);
-    	
     	
         let img = document.getElementById("img" + currentFrame);
     	img.style.display = 'none';
@@ -177,9 +170,6 @@ function CreateImgSpinner() {
     		currentFrame = currentFrame + increment;
     	}
     	
-    	// console.log(currentFrame);
-    	
-    	
         let img2 = document.getElementById("img" + (currentFrame));
         img2.style.display = "block";
     	
@@ -190,32 +180,27 @@ function CreateImgSpinner() {
     // called from mtUp()
     function provideInertia(){
     	
-    	// set timer here to move image after mouseup
-    	// the higher inertia is, the longer the timer
-    	// the more frames.
-    	console.log("");
     	console.log("");
     	console.log("provideInertia called");
     	
-    	let imgInertia = (thisX-lastX);
-    	let nextDuration;
-    	let initialInertiaLimit = 1;		
+    	let imgInertia = thisX-lastX;		// how much inertia the imgSpinner has left
+    	let nextDuration;					// duration of the next loop
+    	let initialInertiaLimit = 1;		// imgInertia initial cutoff
     	let inertiaLimit = 4;				// imgInertia rotation cutoff
-    	let inertiaReductionRatio = 1.4;
+    	let inertiaReductionRatio = 1.4;	// how fast speed is reduced imgInertia/inertiaReductionRatio
+    	let lag = thisXTime - lastXTime;	// lag in ms from last mouse move to mouse up
     	
-    	let lag = thisXTime - lastXTime;
     	
+    	console.log(thisX);
+    	console.log(lastX);
+    	console.log("imgInertia: " + imgInertia);
     	console.log("lag: " + lag);
-    	
     	
     	if(lag > 100) return;
     	
-//    	console.log("mouseUpX: " + mouseUpX);
-//    	console.log("lastX: " + lastX);
-    	console.log("imgInertia: " + imgInertia);
-    	
-    	// or call moveImage here if 
+    	// continue if enough initial inertia
     	if (imgInertia>initialInertiaLimit || imgInertia<-initialInertiaLimit) setTimeout(continueInertia, nextDuration);
+    	
     	
     	function continueInertia(){
     		
@@ -223,7 +208,7 @@ function CreateImgSpinner() {
     		console.log("imgInertia: " + imgInertia);
     		console.log("nextDuration: " + nextDuration);
     		console.log("**********");
-    		
+
     		// move to the next image
     		if (imgInertia > 0) {
     			moveImage(-1);
@@ -231,10 +216,11 @@ function CreateImgSpinner() {
     			moveImage(1);
     		}
     		
+    		// set inertia and duration
     		imgInertia = imgInertia/inertiaReductionRatio;
     		setDuration();
     		
-    		
+    		// continue inertia if it is above inertiaLimit
     		if (imgInertia > inertiaLimit || imgInertia < -inertiaLimit) {
     			setTimeout(continueInertia, nextDuration);
     		}
@@ -252,50 +238,33 @@ function CreateImgSpinner() {
     
     
     
-    
-    
-    // mouse and touch event handlers
+
+    /***************** mouse and touch event handlers *******************/
     
     function mDown(event) {
 
+    	// TODO: make comment about this line
     	event.preventDefault();
     	
     	isRotating = true;
-    	dragX = event.screenX - (event.clientX-event.offsetX);
+    	lastRotateImgX = event.screenX - (event.clientX-event.offsetX);
     };
     
     
     function mMove(event){
     	
-    	console.log("mMove");
-    	
     	if(isRotating == false)  return;
-    	
-        let x = event.offsetX;
-        
-        drag(x);
-        
-        lastX = thisX
-        thisX = x;
-        
-        lastXTime = thisXTime;
-        
-        // const d = new Date();
-        thisXTime = new Date().getTime();
-        
 
-        
-        
-        
+        drag(event.offsetX);
+
     }
     
     
+    
     function mtUp() {
+    	
     	isRotating = false;
-    	
     	thisXTime = new Date().getTime();
-    	
-    	// get mouse position here
     	provideInertia();
     }
     
@@ -309,7 +278,7 @@ function CreateImgSpinner() {
     	let spinnerRect = spinnerDiv.getBoundingClientRect();
     	let offsetX = spinnerRect.left - bodyRect.left;
     	
-    	dragX = event.touches.item(0).screenX - offsetX;
+    	lastRotateImgX = event.touches.item(0).screenX - offsetX;
     	
     }
     
@@ -322,7 +291,7 @@ function CreateImgSpinner() {
         let x = event.touches.item(0).screenX - offsetX;
         
         drag(x);
-    	
+        
     }
     
     
