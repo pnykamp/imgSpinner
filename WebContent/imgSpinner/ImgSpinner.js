@@ -35,7 +35,10 @@ function CreateImgSpinner() {
 	let dirAndSp = 1;
 	
 	let lastX = 0;		
-	let thisX = 0;		
+	let thisX = 0;	
+	
+	let lastXTime = 0;
+	let thisXTime = 0;
 	
 	// initialization function - the only public function
 	function init(divId, pattern, firstImgNum, lastImgNum, altText, directionAndSpeed) {
@@ -200,7 +203,12 @@ function CreateImgSpinner() {
     	let inertiaLimit = 4;				// imgInertia rotation cutoff
     	let inertiaReductionRatio = 1.4;
     	
+    	let lag = thisXTime - lastXTime;
     	
+    	console.log("lag: " + lag);
+    	
+    	
+    	if(lag > 100) return;
     	
 //    	console.log("mouseUpX: " + mouseUpX);
 //    	console.log("lastX: " + lastX);
@@ -259,6 +267,8 @@ function CreateImgSpinner() {
     
     function mMove(event){
     	
+    	console.log("mMove");
+    	
     	if(isRotating == false)  return;
     	
         let x = event.offsetX;
@@ -267,13 +277,23 @@ function CreateImgSpinner() {
         
         lastX = thisX
         thisX = x;
+        
+        lastXTime = thisXTime;
+        
+        // const d = new Date();
+        thisXTime = new Date().getTime();
+        
+
+        
+        
+        
     }
     
     
     function mtUp() {
     	isRotating = false;
     	
-    	
+    	thisXTime = new Date().getTime();
     	
     	// get mouse position here
     	provideInertia();
