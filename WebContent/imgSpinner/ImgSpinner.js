@@ -128,23 +128,13 @@ function CreateImgSpinner() {
     
     // respond to drag - called from event handlers
     function drag(x) {
-    	
-    	
-    	console.log("drag(x)");
-    	console.log("lastX: " + lastX);
-    	console.log("x: " + x);
     
         lastX = thisX;
         thisX = x;
         
-        
-        
-        
-        
         lastXTime = thisXTime;
         thisXTime = new Date().getTime();
     	
-
     	let delta = lastRotateImgX - x;
 
         if ((delta*dirAndSp >= pixelsPerFrame)) {
@@ -180,9 +170,6 @@ function CreateImgSpinner() {
     // called from mtUp()
     function provideInertia(){
     	
-    	console.log("");
-    	console.log("provideInertia called");
-    	
     	let imgInertia = thisX-lastX;		// how much inertia the imgSpinner has left
     	let nextDuration;					// duration of the next loop
     	let initialInertiaLimit = 1;		// imgInertia initial cutoff
@@ -190,24 +177,13 @@ function CreateImgSpinner() {
     	let inertiaReductionRatio = 1.4;	// how fast speed is reduced imgInertia/inertiaReductionRatio
     	let lag = thisXTime - lastXTime;	// lag in ms from last mouse move to mouse up
     	
-    	
-    	console.log(thisX);
-    	console.log(lastX);
-    	console.log("imgInertia: " + imgInertia);
-    	console.log("lag: " + lag);
-    	
     	if(lag > 100) return;
     	
     	// continue if enough initial inertia
     	if (imgInertia>initialInertiaLimit || imgInertia<-initialInertiaLimit) setTimeout(continueInertia, nextDuration);
     	
     	
-    	function continueInertia(){
-    		
-    		console.log("continueInertia called");
-    		console.log("imgInertia: " + imgInertia);
-    		console.log("nextDuration: " + nextDuration);
-    		console.log("**********");
+    	function continueInertia(){	
 
     		// move to the next image
     		if (imgInertia > 0) {
