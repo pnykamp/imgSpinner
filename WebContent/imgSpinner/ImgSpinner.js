@@ -1,4 +1,4 @@
-/*
+/**
 MIT License
 
 Copyright (c) 2022 Paul Nykamp
@@ -28,6 +28,8 @@ function CreateImgSpinner() {
 	let spinnerDiv, firstFrame, lastFrame, dragX, isRotating, currentFrame, pixelsPerFrame, numLoaded;
 	let progress, progressBackground;
 	let dirAndSp = 1;
+	
+	let inertia = 0;		//drag speed - lastDragSpped - mouseUpDragSpeed
 	
 	// initialization function - the only public function
 	function init(divId, pattern, firstImgNum, lastImgNum, altText, directionAndSpeed) {
@@ -119,7 +121,13 @@ function CreateImgSpinner() {
 
     
     // respond to drag - called from event handlers
-    function drag(x, delta) {
+    function drag(x) {
+    	
+    	let delta = dragX - x;
+    	
+    	// console.log(delta);
+    	
+    	inertia = delta;
         
         if ((delta*dirAndSp >= pixelsPerFrame)) {
         	
@@ -154,8 +162,74 @@ function CreateImgSpinner() {
 
         }  
   
-
     }
+    
+    // increment is 1 or -1
+    function moveImage(increment){
+    	
+    	console.log("moveImage, increment: " + increment);
+    	
+    	console.log(currentFrame);
+    	
+    	
+        let img = document.getElementById("img" + currentFrame);
+    	img.style.display = 'none';
+    	
+    	if ((currentFrame == lastFrame) && increment==1 ){
+    		currentFrame = firstFrame;
+    	} else if((currentFrame == firstFrame) && (increment==-1)){
+    		currentFrame = lastFrame;
+    	} else {
+    		currentFrame = currentFrame + increment;
+    	}
+    	
+    	console.log(currentFrame);
+    	
+    	
+        let img2 = document.getElementById("img" + (currentFrame));
+        img2.style.display = "block";
+    	
+    }
+    
+    
+    
+    // called from mtUp()
+    function provideInertia(){
+    	
+    	// set timer here to move image after mouseup
+    	// the higher inertia is, the longer the timer
+    	// the more frames.
+    	
+    	console.log("provideInertia called");
+    	
+    	let imgInertia = inertia/10;
+
+    	console.log(imgInertia);
+    	
+    	if (imgInertia > 1) setTimeout(continueInertia, imgInertia*100);
+    	
+    	function continueInertia(){
+    		
+    		// console.log("continueInertia called");
+    		
+    		if (imgInertia > 0) {
+    			moveImage(1);
+    		} else if (imgInertia < 0) {
+    			moveImage(-1);
+    		}
+    		
+    		imgInertia = imgInertia/2;
+    		
+    		if (imgInertia > 0.2) {
+    			setTimeout(continueInertia, imgInertia*100);
+    		}
+    		
+    	}
+    	
+    }
+
+    
+    
     
     
     
@@ -175,13 +249,14 @@ function CreateImgSpinner() {
     	if(isRotating == false)  return;
     	
         let x = event.offsetX;
-        let delta = dragX - x;
-        drag(x, delta);
+        
+        drag(x);
     }
     
     
     function mtUp() {
-    	isRotating = false; 
+    	isRotating = false;
+    	provideInertia();
     }
     
     
@@ -204,11 +279,9 @@ function CreateImgSpinner() {
     	let bodyRect = document.body.getBoundingClientRect();
     	let spinnerRect = spinnerDiv.getBoundingClientRect();
     	let offsetX = spinnerRect.left - bodyRect.left;
-
         let x = event.touches.item(0).screenX - offsetX;
-        let delta = dragX - x;
         
-        drag(x, delta);
+        drag(x);
     	
     }
     
