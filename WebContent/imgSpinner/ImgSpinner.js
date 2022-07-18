@@ -25,11 +25,17 @@ SOFTWARE.
 function CreateImgSpinner() {
 	
 	// private variables
+	
+	// dragX = mouse x on last image increment
+	// lastX - last reported mouse x 
+	
+	
 	let spinnerDiv, firstFrame, lastFrame, dragX, isRotating, currentFrame, pixelsPerFrame, numLoaded;
 	let progress, progressBackground;
 	let dirAndSp = 1;
 	
-	let inertia = 0;		//drag speed - lastDragSpped - mouseUpDragSpeed
+	let lastX = 0;		//not drag speed - lastDragSpped - mouseUpDragSpeed
+	let thisX = 0;		//not drag speed - lastDragSpped - mouseUpDragSpeed
 	
 	// initialization function - the only public function
 	function init(divId, pattern, firstImgNum, lastImgNum, altText, directionAndSpeed) {
@@ -123,11 +129,11 @@ function CreateImgSpinner() {
     // respond to drag - called from event handlers
     function drag(x) {
     	
+    	lastX = x;
+    	
     	let delta = dragX - x;
     	
     	// console.log(delta);
-    	
-    	inertia = delta;
         
         if ((delta*dirAndSp >= pixelsPerFrame)) {
         	
@@ -169,7 +175,7 @@ function CreateImgSpinner() {
     	
     	console.log("moveImage, increment: " + increment);
     	
-    	console.log(currentFrame);
+    	// console.log(currentFrame);
     	
     	
         let img = document.getElementById("img" + currentFrame);
@@ -183,7 +189,7 @@ function CreateImgSpinner() {
     		currentFrame = currentFrame + increment;
     	}
     	
-    	console.log(currentFrame);
+    	// console.log(currentFrame);
     	
     	
         let img2 = document.getElementById("img" + (currentFrame));
@@ -199,32 +205,54 @@ function CreateImgSpinner() {
     	// set timer here to move image after mouseup
     	// the higher inertia is, the longer the timer
     	// the more frames.
-    	
+    	console.log("");
+    	console.log("");
     	console.log("provideInertia called");
     	
-    	let imgInertia = inertia/10;
-
-    	console.log(imgInertia);
+    	let imgInertia = (thisX-lastX);
+    	let nextDuration;
+    	let initialInertiaLimit = 0.1;		
+    	let inertiaLimit = 2;				// imgInertia rotation cutoff
+    	let inertiaReductionRatio = 2;
     	
-    	if (imgInertia > 1) setTimeout(continueInertia, imgInertia*100);
+    	
+    	
+//    	console.log("mouseUpX: " + mouseUpX);
+//    	console.log("lastX: " + lastX);
+    	console.log("imgInertia: " + imgInertia);
+    	
+    	// or call moveImage here if 
+    	if (imgInertia>initialInertiaLimit || imgInertia<-initialInertiaLimit) setTimeout(continueInertia, nextDuration);
     	
     	function continueInertia(){
     		
-    		// console.log("continueInertia called");
+    		console.log("continueInertia called");
+    		console.log("imgInertia: " + imgInertia);
+    		console.log("nextDuration: " + nextDuration);
+    		console.log("**********");
     		
+    		// move to the next image
     		if (imgInertia > 0) {
-    			moveImage(1);
-    		} else if (imgInertia < 0) {
     			moveImage(-1);
+    		} else if (imgInertia < 0) {
+    			moveImage(1);
     		}
     		
-    		imgInertia = imgInertia/2;
+    		imgInertia = imgInertia/inertiaReductionRatio;
+    		setDuration();
     		
-    		if (imgInertia > 0.2) {
-    			setTimeout(continueInertia, imgInertia*100);
+    		
+    		if (imgInertia > inertiaLimit || imgInertia < -inertiaLimit) {
+    			setTimeout(continueInertia, nextDuration);
     		}
     		
     	}
+    	
+    	function setDuration(){
+    		nextDuration = Math.abs(1000/imgInertia);
+    	}
+    	setDuration();
+    	
     	
     }
 
@@ -251,11 +279,18 @@ function CreateImgSpinner() {
         let x = event.offsetX;
         
         drag(x);
+        
+        lastX = thisX
+        thisX = x;
     }
     
     
     function mtUp() {
     	isRotating = false;
+    	
+    	
+    	
+    	// get mouse position here
     	provideInertia();
     }
     
