@@ -44,8 +44,6 @@ function CreateImgSpinner() {
 		
 		console.log("CreateSpinner init called");
 
-	    // let that = this;
-
 	    spinnerDiv = document.getElementById(divId);
 	    firstFrame = firstImgNum;
 	    lastFrame = lastImgNum;
@@ -66,16 +64,12 @@ function CreateImgSpinner() {
 		// bind mouse and touch listeners
 	    // see mouse and touch event handlers - bottom of file
 	    spinnerDiv.onmousedown = mDown.bind(this);
-		// document.onmouseup = mtUp.bind(this);
 	    document.addEventListener("mouseup", mtUp, false);
 		spinnerDiv.onmousemove = mMove.bind(this);
 		
 		spinnerDiv.ontouchstart = tStart.bind(this);
-		// document.ontouchend = mtUp.bind(this);
 		document.addEventListener("touchend", mtUp, false);
 		spinnerDiv.ontouchmove = tMove.bind(this);
-		
-		console.log(imgIdString);
 		
 	}
 	
@@ -128,8 +122,8 @@ function CreateImgSpinner() {
     	numLoaded++;
     	progress.value = numLoaded;
     	if (numLoaded == (lastFrame - firstFrame + 1)) {
-    		console.log(imgIdString + ": images loaded");
     		progressBackground.style.display = "none";
+    		console.log("Images loaded.");
     	}
     }
 
@@ -157,12 +151,8 @@ function CreateImgSpinner() {
     // increment is 1 or -1
     function moveImage(increment){
     	
-    	console.log(imgIdString + ": moveImage, increment: " + increment);
-    	
         let img = document.getElementById(imgIdString + currentFrame);
     	img.style.display = 'none';
-    	
-    	console.log(imgIdString + ": moveImage, img.id: " + imgIdString + currentFrame);
     	
     	if ((currentFrame == lastFrame) && increment==1 ){
     		currentFrame = firstFrame;
@@ -174,8 +164,6 @@ function CreateImgSpinner() {
     	
         let img2 = document.getElementById(imgIdString + currentFrame);
         img2.style.display = "block";
-        
-        console.log(imgIdString + ": moveImage, img2.id: " + imgIdString + currentFrame);
     	
     }
     
@@ -245,16 +233,12 @@ function CreateImgSpinner() {
     	
     	if(isRotating == false)  return;
     	
-    	console.log(imgIdString + ": mMove, isRotating: " + isRotating);
-    	
         drag(event.offsetX);
     }
     
     
     
     function mtUp() {
-    	
-    	console.log(imgIdString + ": mtUp");
     	
     	isRotating = false;
     	thisXTime = new Date().getTime();
