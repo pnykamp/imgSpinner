@@ -30,6 +30,8 @@ function CreateImgSpinner() {
 	let pixelsPerFrame, dirAndSp;
 	let lastRotateImgX, isRotating, currentFrame;
 	
+	let imgIdString;		// provides unique prefix for img ids
+	
 	let lastX = 0;			// last onMouseMove
 	let thisX = 0;			// this onMouseMove
 	
@@ -42,7 +44,7 @@ function CreateImgSpinner() {
 		
 		console.log("CreateSpinner init called");
 
-	    let that = this;
+	    // let that = this;
 
 	    spinnerDiv = document.getElementById(divId);
 	    firstFrame = firstImgNum;
@@ -52,6 +54,7 @@ function CreateImgSpinner() {
 	    numLoaded = 0;
 	    currentFrame = firstFrame;
 	    dirAndSp = directionAndSpeed;
+	    imgIdString = divId + "IS";
 	    
 	    // do this first in case spinnerDiv.offsetWidth is affected
 	    createImages(pattern, altText);
@@ -62,13 +65,17 @@ function CreateImgSpinner() {
 	    
 		// bind mouse and touch listeners
 	    // see mouse and touch event handlers - bottom of file
-	    spinnerDiv.onmousedown = mDown.bind(that);
-		document.onmouseup = mtUp.bind(that);
-		spinnerDiv.onmousemove = mMove.bind(that);
+	    spinnerDiv.onmousedown = mDown.bind(this);
+		// document.onmouseup = mtUp.bind(this);
+	    document.addEventListener("mouseup", mtUp, false);
+		spinnerDiv.onmousemove = mMove.bind(this);
 		
-		spinnerDiv.ontouchstart = tStart.bind(that);
-		document.ontouchend = mtUp.bind(that);
-		spinnerDiv.ontouchmove = tMove.bind(that);
+		spinnerDiv.ontouchstart = tStart.bind(this);
+		// document.ontouchend = mtUp.bind(this);
+		document.addEventListener("touchend", mtUp, false);
+		spinnerDiv.ontouchmove = tMove.bind(this);
+		
+		console.log(imgIdString);
 		
 	}
 	
@@ -97,7 +104,7 @@ function CreateImgSpinner() {
 	    for(let i=firstFrame; i<lastFrame+1; i++) {
 	        let img = document.createElement("img");
 	        img.alt = altText;
-	        img.id = "img" + i;
+	        img.id = imgIdString + i;
 	        img.className = "spinner-img";
 	        img.onload = function(){
 	        	loading();
@@ -121,7 +128,7 @@ function CreateImgSpinner() {
     	numLoaded++;
     	progress.value = numLoaded;
     	if (numLoaded == (lastFrame - firstFrame + 1)) {
-    		console.log("images loaded");
+    		console.log(imgIdString + ": images loaded");
     		progressBackground.style.display = "none";
     	}
     }
@@ -150,8 +157,12 @@ function CreateImgSpinner() {
     // increment is 1 or -1
     function moveImage(increment){
     	
-        let img = document.getElementById("img" + currentFrame);
+    	console.log(imgIdString + ": moveImage, increment: " + increment);
+    	
+        let img = document.getElementById(imgIdString + currentFrame);
     	img.style.display = 'none';
+    	
+    	console.log(imgIdString + ": moveImage, img.id: " + imgIdString + currentFrame);
     	
     	if ((currentFrame == lastFrame) && increment==1 ){
     		currentFrame = firstFrame;
@@ -161,8 +172,10 @@ function CreateImgSpinner() {
     		currentFrame = currentFrame + increment;
     	}
     	
-        let img2 = document.getElementById("img" + (currentFrame));
+        let img2 = document.getElementById(imgIdString + currentFrame);
         img2.style.display = "block";
+        
+        console.log(imgIdString + ": moveImage, img2.id: " + imgIdString + currentFrame);
     	
     }
     
@@ -231,12 +244,17 @@ function CreateImgSpinner() {
     function mMove(event){
     	
     	if(isRotating == false)  return;
+    	
+    	console.log(imgIdString + ": mMove, isRotating: " + isRotating);
+    	
         drag(event.offsetX);
     }
     
     
     
     function mtUp() {
+    	
+    	console.log(imgIdString + ": mtUp");
     	
     	isRotating = false;
     	thisXTime = new Date().getTime();
