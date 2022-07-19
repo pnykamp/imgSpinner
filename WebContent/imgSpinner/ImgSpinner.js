@@ -56,7 +56,7 @@ function CreateImgSpinner() {
 	    // do this first in case spinnerDiv.offsetWidth is affected
 	    createImages(pattern, altText);
 	    
-	    pixelsPerFrame = spinnerDiv.offsetWidth / ((lastFrame-firstFrame+1) / 2);
+	    pixelsPerFrame = spinnerDiv.offsetWidth / ((lastFrame-firstFrame+1) / 4);
 	    
 	    createAndShowProgress();
 	    
@@ -93,7 +93,7 @@ function CreateImgSpinner() {
 	
 	// create and load images into spinner div
 	function createImages(pattern, altText) {
-	    // create the images
+	    
 	    for(let i=firstFrame; i<lastFrame+1; i++) {
 	        let img = document.createElement("img");
 	        img.alt = altText;
@@ -117,6 +117,7 @@ function CreateImgSpinner() {
 
     // display progress, hide progress when complete
     function loading() {
+    	
     	numLoaded++;
     	progress.value = numLoaded;
     	if (numLoaded == (lastFrame - firstFrame + 1)) {
@@ -170,15 +171,15 @@ function CreateImgSpinner() {
     // called from mtUp()
     function provideInertia(){
     	
+    	let lag = thisXTime - lastXTime;	// lag in ms from last mouse move to mouse up
+    	if(lag > 100) return;
+    	
     	let imgInertia = thisX-lastX;		// how much inertia the imgSpinner has left
     	let nextDuration;					// duration of the next loop
     	let initialInertiaLimit = 1;		// imgInertia initial cutoff
     	let inertiaLimit = 4;				// imgInertia rotation cutoff
     	let inertiaReductionRatio = 1.4;	// how fast speed is reduced imgInertia/inertiaReductionRatio
-    	let lag = thisXTime - lastXTime;	// lag in ms from last mouse move to mouse up
-    	
-    	if(lag > 100) return;
-    	
+
     	// continue if enough initial inertia
     	if (imgInertia>initialInertiaLimit || imgInertia<-initialInertiaLimit) setTimeout(continueInertia, nextDuration);
     	
@@ -230,9 +231,7 @@ function CreateImgSpinner() {
     function mMove(event){
     	
     	if(isRotating == false)  return;
-
         drag(event.offsetX);
-
     }
     
     
