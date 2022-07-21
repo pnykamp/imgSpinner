@@ -38,5 +38,5 @@ Where:
 
 **directionAndSpeed** positve numbers are forward, negative numbers are reverse. 1 or -1 is the defaut speed. Larger numbers increse speed, smaller decrease speed.
 
-You can find live examples [here](https:thelynk.ca/imgspinner/imgspinner.html).
+You can find live examples [here](https://thelynk.ca/imgspinner/imgspinner.html).
 
