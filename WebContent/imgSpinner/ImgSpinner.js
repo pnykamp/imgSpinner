@@ -190,10 +190,18 @@ function CreateImgSpinner() {
     	function continueInertia(){	
 
     		// move to the next image
-    		if (imgInertia > 0) {
-    			moveImage(-1);
-    		} else if (imgInertia < 0) {
-    			moveImage(1);
+    		if (thisX-lastX > 0) {
+    			if(dirAndSp > 0) {
+    				moveImage(-1);
+    			} else if (dirAndSp < 0) {
+    				moveImage(1);
+    			}
+    		} else if (thisX-lastX < 0) {
+    			if(dirAndSp > 0) {
+    				moveImage(1);
+    			} else if (dirAndSp < 0) {
+    				moveImage(-1);
+    			}
     		}
     		
     		// set inertia and duration
