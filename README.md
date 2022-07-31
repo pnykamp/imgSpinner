@@ -36,7 +36,7 @@ Where:
 
 **altText** is the alt text of the images
 
-**directionAndSpeed** positve numbers are forward, negative numbers are reverse. 1 or -1 is the defaut speed. Larger numbers increse speed, smaller decrease speed.
+**directionAndSpeed** positive numbers are forward, negative numbers are reverse. 1 or -1 is the defaut speed. Larger numbers increase speed, smaller decrease speed.
 
 You can find live examples [here](https://thelynk.ca/imgspinner/imgspinner.html).
 
