@@ -40,8 +40,9 @@ function CreateImgSpinner() {
 	let lastXTime = 0;		// set onMouseMove
 	let thisXTime = 0;		// set onMouseUp
 	
+	/***************** public functions *******************/
 	
-	// initialization function - the only public function
+	// initialization function 
 	function init(divId, pattern, firstImgNum, lastImgNum, altText, directionAndSpeed) {
 		
 		console.log("CreateSpinner init called");
@@ -75,7 +76,9 @@ function CreateImgSpinner() {
 		
 	}
 	
-
+	function setDirectionAndSpeed(directionAndSpeed){
+		dirAndSp = directionAndSpeed;
+	}
 	
 	/***************** private functions *******************/
 	
@@ -284,6 +287,9 @@ function CreateImgSpinner() {
     
 
 	
-	return {init:init}
+    return {
+    	init : init,
+    	setDirectionAndSpeed : setDirectionAndSpeed
+    }
 
 }
