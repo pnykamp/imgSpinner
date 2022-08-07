@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/** version 0.1 */
-
 function CreateImgSpinner() {
 	
 	// private variables
@@ -183,15 +181,18 @@ function CreateImgSpinner() {
     	let imgInertia = thisX-lastX;		// how much inertia the imgSpinner has left
     	let nextDuration;					// duration of the next loop
     	let initialInertiaLimit = 1;		// imgInertia initial cutoff
-    	let inertiaLimit = 4;				// imgInertia rotation cutoff
-    	let inertiaReductionRatio = 1.4;	// how fast speed is reduced imgInertia/inertiaReductionRatio
+    	let inertiaLimit = 2.5;				// imgInertia rotation cutoff
+    	let inertiaReductionRatio = 1.2;	// how fast speed is reduced imgInertia/inertiaReductionRatio
+    	
+    	// tie duration of next frame to dirAndSp - ie more inetia (less duration) for more speed
+    	let durationMultiplier = 500 / (1 + Math.abs(dirAndSp)/6);
 
     	// continue if enough initial inertia
-    	if (imgInertia>initialInertiaLimit || imgInertia<-initialInertiaLimit) setTimeout(continueInertia, nextDuration);
+    	if (imgInertia>initialInertiaLimit || imgInertia<-initialInertiaLimit) setTimeout(continueInertia, 50);
     	
     	
     	function continueInertia(){	
-
+    		
     		// move to the next image
     		if (thisX-lastX > 0) {
     			if(dirAndSp > 0) {
@@ -207,7 +208,7 @@ function CreateImgSpinner() {
     			}
     		}
     		
-    		// set inertia and duration
+    		// set next inertia and duration
     		imgInertia = imgInertia/inertiaReductionRatio;
     		setDuration();
     		
@@ -219,7 +220,7 @@ function CreateImgSpinner() {
     	}
     	
     	function setDuration(){
-    		nextDuration = Math.abs(500/imgInertia);
+    		nextDuration = Math.abs( durationMultiplier / imgInertia );
     	}
     	setDuration();
     	
